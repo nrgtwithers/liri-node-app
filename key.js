@@ -6,11 +6,9 @@ exports.spotify = {
 };
 
 
-app.get('/login', function(req, res) {
-    var scopes = 'user-read-private user-read-email';
-    res.redirect('https://accounts.spotify.com/authorize' +
-      '?response_type=code' +
-      '&client_id=' + my_client_id +
-      (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-      '&redirect_uri=' + encodeURIComponent(redirect_uri));
-    });
+// // keys
+var omdbURL = 'http://www.omdbapi.com/?t=' + movie + '&plot=short&tomatoes=true';
+
+OMDb API: http://www.omdbapi.com/?i=tt3896198&apikey=919de1e7
+
+var bandURL = 'https://rest.bandsintown.com/artists/' + artist + '/events?app_id=codingbootcamp'

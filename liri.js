@@ -6,64 +6,127 @@ require("dotenv").config();
 var fs = require('fs');
 
 
-var keys = require("./keys.js");
+var keys = require("./key");
 
 var spotify = new Spotify(keys.spotify);
 
-// // keys
-// var omdbURL = 'http://www.omdbapi.com/?t=' + movie + '&plot=short&tomatoes=true';
-// OMDb API: http://www.omdbapi.com/?i=tt3896198&apikey=919de1e7
-// var bandURL = 'https://rest.bandsintown.com/artists/' + artist + '/events?app_id=codingbootcamp'
-
 
 // Variable with input / commands
-var input = process.argv[3]
+var nodeinput = process.argv[3]
 var commands = process.argv[2]
 
 //switch case - commands 
 
-switch (commands){
+switch (commands) {
     case 'concert-this': watchBand();
-    break;
+        break;
     case 'spotify-this-song': songInfo();
-    break;
+        break;
     case 'movie-this': movieInfo();
-    break;
+        break;
     case 'do-what-it-says': doIt();
-    break;
+        break;
     default:
-    console.log(`Please enter a command: concert-this, spotify-this-song, movie-this, do-what-it-says`);
-    break;
+        console.log(`Please enter a command: concert-this, spotify-this-song, movie-this, do-what-it-says`);
+        break;
 }
 
-function watchBand(){
-    console.log(`Name of venue: ${}`)
-    console.log(`Venue location: ${}`)
-    console.log(`Date of the event: ${}`)
+function watchBand() {
+    if () {
+        // Display in terminal
+        console.log('-------------------------------')
+        console.log('')
+        console.log(`Name of venue: ${}`)
+        console.log(`Venue location: ${}`)
+        console.log(`Date of the event: ${}`)
+        console.log('')
+        console.log('-------------------------------')
+        //add to log.txt
+        fs.readFile('log.txt', '-------------------------------')
+        fs.readFile('log.txt', '')
+        fs.readFile('log.txt', `Name of venue: ${}`)
+        fs.readFile('log.txt', `Venue location: ${}`)
+        fs.readFile('log.txt', `Date of the event: ${}`)
+        fs.readFile('log.txt', '')
+        fs.readFile('log.txt', '-------------------------------')
+    } else {
+        console.log('ERROR!')
+    }
 }
 
-function songInfo(){
-    console.log(`Artist(s): ${}`)
-    console.log(`Song name: ${}`)
-    console.log(`Spotify link: ${}`)
-    console.log(`Album name: ${}`)
+function songInfo(movie) {
+
+    if () {
+        // Display in terminal
+        console.log('-------------------------------')
+        console.log('')
+        console.log(`Artist(s): ${}`)
+        console.log(`Song name: ${}`)
+        console.log(`Spotify link: ${}`)
+        console.log(`Album name: ${}`)
+        console.log('')
+        console.log('-------------------------------')
+        //Add to log.txt
+        fs.readFile('log.txt', '-------------------------------')
+        fs.readFile('log.txt', '')
+        fs.readFile('log.txt', `Artist(s): ${}`)
+        fs.readFile('log.txt', `Song name: ${}`)
+        fs.readFile('log.txt', `Spotify link: ${}`)
+        fs.readFile('log.txt', `Album name: ${}`)
+        fs.readFile('log.txt', '')
+        fs.readFile('log.txt', '-------------------------------')
+    } else {
+        console.log('ERROR!')
+    }
 }
 
-function movieInfo(){
-    console.log(`Title name: ${}`)
-    console.log(`Release Year: ${}`)
-    console.log(`IMBD Rating: ${}`)
-    console.log(`Rotten Tomatoes Rating ${}`)
-    console.log(`Country Filmed: ${}`)
-    console.log(`Language: ${}`)
-    console.log(`Plot: ${}`)
-    console.log(`Actors/Actresses: ${} `)
+function movieInfo() {
+    var omdbURL = 'http://www.omdbapi.com/?t=' + movie + '&plot=short&tomatoes=true';
+
+    requestAnimationFrame(){
+        if () {
+            // Display in terminal
+            console.log('-------------------------------')
+            console.log(`Title name: ${}`)
+            console.log(`Release Year: ${}`)
+            console.log(`IMBD Rating: ${}`)
+            console.log(`Rotten Tomatoes Rating ${}`)
+            console.log(`Country Filmed: ${}`)
+            console.log(`Language: ${}`)
+            console.log(`Plot: ${}`)
+            console.log(`Actors/Actresses: ${}`)
+            console.log('-------------------------------')
+            // Add to log.txt
+            fs.readFile('log.txt', '-------------------------------')
+            fs.readFile('log.txt', `Title name: ${}`)
+            fs.readFile('log.txt', `Release Year: ${}`)
+            fs.readFile('log.txt', `IMBD Rating: ${}`)
+            fs.readFile('log.txt', `Rotten Tomatoes Rating ${}`)
+            fs.readFile('log.txt', `Country Filmed: ${}`)
+            fs.readFile('log.txt', `Language: ${}`)
+            fs.readFile('log.txt', `Plot: ${}`)
+            fs.readFile('log.txt', `Actors/Actresses: ${}`)
+            fs.readFile('log.txt', '-------------------------------')
+        } else {
+            console.log('ERROR!')
+        }
+
+        if (movie === '') {
+            console.log('-------------------------------')
+            console.log('')
+            console.log(`If you haven't watched "Mr. Nobody," then you should: http://www.imbd.com/title/tt0485947/`)
+            console.log(`It's on Netflix`)
+            console.log('')
+            console.log('-------------------------------')
+        }
+    });
 }
 
-function doIt(){
-    fs.readFile('random.txt', "utf8", function(error, data){
+
+function doIt() {
+    fs.readFile('random.txt', "utf8", function (error, data) {
         var txt = data.split(',');
 
-    
+
     });
 }
