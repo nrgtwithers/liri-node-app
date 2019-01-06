@@ -19,7 +19,7 @@ The format you use in the terminal would be node liri.js < command > + < Artist 
 
 Examples on how to it works: 
 
-![concert]()
-![spotify]()
-![movie]()
+![concert](https://github.com/nrgtwithers/liri-node-app/blob/master/concert-this.png)
+![spotify](https://github.com/nrgtwithers/liri-node-app/blob/master/spotify-this.png)
+![movie](https://github.com/nrgtwithers/liri-node-app/blob/master/movie-this.png)
 ![doit]()
