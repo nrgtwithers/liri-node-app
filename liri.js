@@ -10,29 +10,38 @@ var keys = require("./key");
 
 var spotify = new Spotify(keys.spotify);
 
-// Variable with input / commands
-var nodeinput = process.argv[3]
+// Variable with input / commands 
 var commands = process.argv[2]
 
-// var j = '';
+// This is to provide the ability to seach multiple words vs a single word title, song, and band
+var j = process.argv;
+var nodeinput = j[3];//this is your process arg 3
 
-// for (var i = 3; i < nodeinput; i++){
-//     if (i > 3 && i < nodeinput){
-//         j = j +"+"+ nodeinput[i];
-//     } else {
-//         j = j + nodeinput[i];
-//     }
-// }
-// console.log(j)
+if (j.length > 4) {
+    // If there are more that 4 arguments, means the user typed in more than one word of the query
+    for (var i = 4; i < j.length; i++) {
+        nodeinput = nodeinput + "+" + j[i];
+    }
+}
 
 //switch case - commands 
 
 switch (commands) {
     case 'concert-this': watchBand();
         break;
-    case 'spotify-this-song': songInfo();
+    case 'spotify-this-song':
+        if (j) {
+            songInfo(j);
+        } else {
+            songInfo("The Sign");
+        }
         break;
-    case 'movie-this': movieInfo();
+    case 'movie-this':
+        if (j) {
+            movieInfo(j);
+        } else {
+            movieInfo("Mr. Nobody");
+        }
         break;
     case 'do-what-it-says': doIt();
         break;
@@ -41,7 +50,7 @@ switch (commands) {
         break;
 }
 
-function watchBand() {
+function watchBand(artist) {
     var artist = nodeinput
     var bandURL = 'https://rest.bandsintown.com/artists/' + artist + '/events?app_id=codingbootcamp'
     axios.get(bandURL)
@@ -57,36 +66,18 @@ function watchBand() {
             console.log('-------------------------------')
         })
         .catch(function (error) {
-            console.log(error);
+            // console.log(error);
+
+            console.log(`This artist(s) has no upcoming shows.`)
+            console.log('')
+            console.log('-------------------------------')
         });
-    // if () {
-    // Display in terminal
-    // console.log('-------------------------------')
-    // console.log('')
-    // console.log(`Name of venue: ${}`)
-    // console.log(`Venue location: ${}`)
-    // console.log(`Date of the event: ${}`)
-    // console.log('')
-    // console.log('-------------------------------')
-    // //add to log.txt
-    // fs.readFile('log.txt', '-------------------------------')
-    // fs.readFile('log.txt', '')
-    // fs.readFile('log.txt', `Name of venue: ${}`)
-    // fs.readFile('log.txt', `Venue location: ${}`)
-    // fs.readFile('log.txt', `Date of the event: ${}`)
-    // fs.readFile('log.txt', '')
-    // fs.readFile('log.txt', '-------------------------------')
-    // } else {
-    //     console.log('ERROR!')
-    // }
 }
 
-function songInfo() {
+function songInfo(song) {
     var song = nodeinput
     spotify.search({ type: 'track', query: song }, function (err, data) {
-        // if (err) {
-        //     return console.log('Error occurred: ' + err);
-        // }
+
         if (!err) {
             for (var i = 0; i < data.tracks.items.length; i++) {
                 var data = data.tracks.items[i]
@@ -107,29 +98,14 @@ function songInfo() {
 }
 
 
-
-//         //Add to log.txt
-//         fs.readFile('log.txt', '-------------------------------')
-//         fs.readFile('log.txt', '')
-//         fs.readFile('log.txt', `Artist(s): ${}`)
-//         fs.readFile('log.txt', `Song name: ${}`)
-//         fs.readFile('log.txt', `Spotify link: ${}`)
-//         fs.readFile('log.txt', `Album name: ${}`)
-//         fs.readFile('log.txt', '')
-//         fs.readFile('log.txt', '-------------------------------')
-//     } else {
-//         console.log('ERROR!')
-//     }
-// }
-
-function movieInfo() {
+// Function to pull the specific information below from OMBD API 
+function movieInfo(movie, err) {
     var movie = nodeinput
     var omdbURL = 'http://www.omdbapi.com/?t=' + movie + '&plot=short&tomatoes=true&apikey=' + keys.ombd.key;
     axios.get(omdbURL)
         .then(function (response) {
-            console.log(response)
             var data = response.data
-            // Display in terminal
+            // Displays in terminal
             console.log('-------------------------------')
             console.log(`Title name: ${data.Title}`)
             console.log(`Release Year: ${data.Year}`)
@@ -142,9 +118,8 @@ function movieInfo() {
             console.log('-------------------------------')
         })
         .catch(function (error) {
-            console.log(error);
-
-            if (nodeinput === '') {
+            //This is to pull information when no content is entered after movie-this command
+            if (nodeinput === "Mr. Nobody") {
                 console.log('-------------------------------')
                 console.log('')
                 console.log(`If you haven't watched "Mr. Nobody," then you should: http://www.imbd.com/title/tt0485947/`)
@@ -154,32 +129,12 @@ function movieInfo() {
             }
         });
 }
-
-//             // Add to log.txt
-//             fs.readFile('log.txt', '-------------------------------')
-//             fs.readFile('log.txt', `Title name: ${}`)
-//             fs.readFile('log.txt', `Release Year: ${}`)
-//             fs.readFile('log.txt', `IMBD Rating: ${}`)
-//             fs.readFile('log.txt', `Rotten Tomatoes Rating ${}`)
-//             fs.readFile('log.txt', `Country Filmed: ${}`)
-//             fs.readFile('log.txt', `Language: ${}`)
-//             fs.readFile('log.txt', `Plot: ${}`)
-//             fs.readFile('log.txt', `Actors/Actresses: ${}`)
-//             fs.readFile('log.txt', '-------------------------------')
-//         } else {
-//             console.log('ERROR!')
-//         }
-
-
-//     });
-// }
-
-
+// Function to pull information from random.txt to seach for song information thru Spotify.
 function doIt() {
-    fs.readFile('random.txt', "utf8", function (error, data) {
+    fs.readFile('random.txt', "utf8", function (err, data) {
         var txt = data.split(',');
-
+        console.log(txt[1])
         songInfo(txt[1]);
-
     });
 }
+
