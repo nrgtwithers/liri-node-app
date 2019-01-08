@@ -37,7 +37,7 @@ switch (commands) {
         }
         break;
     case 'movie-this':
-            movieInfo(j);
+        movieInfo(j);
         break;
     case 'do-what-it-says': doIt();
         break;
@@ -71,12 +71,14 @@ function watchBand(artist) {
 }
 
 function songInfo(song) {
-    var song = nodeinput
+    var song;
+    // song = nodeinput;
     spotify.search({ type: 'track', query: song }, function (err, data) {
 
-        if (!err) {
+        if(typeof song ==='string'){
             for (var i = 0; i < data.tracks.items.length; i++) {
                 var data = data.tracks.items[i]
+                song = nodeinput
                 // Display in terminal
                 console.log('-------------------------------')
                 console.log('')
@@ -90,6 +92,7 @@ function songInfo(song) {
         } else {
             return console.log('Error occurred: ' + err);
         }
+        
     });
 }
 
@@ -100,28 +103,28 @@ function movieInfo(movie, err) {
     var omdbURL = 'http://www.omdbapi.com/?t=' + movie + '&plot=short&tomatoes=true&apikey=' + keys.ombd.key;
     axios.get(omdbURL)
         .then(function (response) {
-            if (!nodeinput){
-               movie='Mr. Nobody';
-               console.log('-------------------------------')
-               console.log('')
-               console.log(`If you haven't watched "Mr. Nobody," then you should: http://www.imbd.com/title/tt0485947/`)
-               console.log(`It's on Netflix`)
-               console.log('')
-               console.log('-------------------------------')
-            }else{
-               movie= nodeinput;
-            var data = response.data
-            // Displays in terminal
-            console.log('-------------------------------')
-            console.log(`Title name: ${data.Title}`)
-            console.log(`Release Year: ${data.Year}`)
-            console.log(`IMBD Rating: ${data.imbdRating}`)
-            console.log(`Rotten Tomatoes Rating ${data.tomatoRating}`)
-            console.log(`Country Filmed: ${data.Country}`)
-            console.log(`Language: ${data.Language}`)
-            console.log(`Plot: ${data.Plot}`)
-            console.log(`Actors/Actresses: ${data.Actors}`)
-            console.log('-------------------------------')
+            if (!nodeinput) {
+                movie = 'Mr. Nobody';
+                console.log('-------------------------------')
+                console.log('')
+                console.log(`If you haven't watched "Mr. Nobody," then you should: http://www.imbd.com/title/tt0485947/`)
+                console.log(`It's on Netflix`)
+                console.log('')
+                console.log('-------------------------------')
+            } else {
+                movie = nodeinput;
+                var data = response.data
+                // Displays in terminal
+                console.log('-------------------------------')
+                console.log(`Title name: ${data.Title}`)
+                console.log(`Release Year: ${data.Year}`)
+                console.log(`IMBD Rating: ${data.imbdRating}`)
+                console.log(`Rotten Tomatoes Rating ${data.tomatoRating}`)
+                console.log(`Country Filmed: ${data.Country}`)
+                console.log(`Language: ${data.Language}`)
+                console.log(`Plot: ${data.Plot}`)
+                console.log(`Actors/Actresses: ${data.Actors}`)
+                console.log('-------------------------------')
             }
         })
         .catch(function (error) {
@@ -129,9 +132,10 @@ function movieInfo(movie, err) {
 }
 // Function to pull information from random.txt to seach for song information thru Spotify.
 function doIt() {
+
     fs.readFile('random.txt', "utf8", function (err, data) {
         var txt = data.split(',');
-        console.log(txt[1])
+        // console.log(txt[1])
         songInfo(txt[1]);
     });
 }
