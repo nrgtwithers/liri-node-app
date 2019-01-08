@@ -52,6 +52,7 @@ function watchBand(artist) {
     axios.get(bandURL)
         .then(function (response) {
             var data = response.data[0]
+            console.log(bandURL)
             //Display
             console.log('-------------------------------')
             console.log('')
@@ -70,16 +71,17 @@ function watchBand(artist) {
         });
 }
 
-function songInfo(song) {
-    var song;
-    // song = nodeinput;
+function songInfo(song, err) {
+    var song = nodeinput;
+
     spotify.search({ type: 'track', query: song }, function (err, data) {
 
-        if(typeof song ==='string'){
+        if (!err) {
             for (var i = 0; i < data.tracks.items.length; i++) {
                 var data = data.tracks.items[i]
-                song = nodeinput
                 // Display in terminal
+                song=nodeinput;
+                
                 console.log('-------------------------------')
                 console.log('')
                 console.log(`Artist(s): ${data.artists[0].name}`)
@@ -99,7 +101,7 @@ function songInfo(song) {
 
 // Function to pull the specific information below from OMBD API 
 function movieInfo(movie, err) {
-    var movie;
+    var movie = nodeinput;
     var omdbURL = 'http://www.omdbapi.com/?t=' + movie + '&plot=short&tomatoes=true&apikey=' + keys.ombd.key;
     axios.get(omdbURL)
         .then(function (response) {
@@ -113,7 +115,9 @@ function movieInfo(movie, err) {
                 console.log('-------------------------------')
             } else {
                 movie = nodeinput;
+                // console.log(movie)
                 var data = response.data
+                console.log(omdbURL)
                 // Displays in terminal
                 console.log('-------------------------------')
                 console.log(`Title name: ${data.Title}`)
