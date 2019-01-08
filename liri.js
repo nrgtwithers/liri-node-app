@@ -52,7 +52,7 @@ function watchBand(artist) {
     axios.get(bandURL)
         .then(function (response) {
             var data = response.data[0]
-            console.log(bandURL)
+            // console.log(bandURL)
             //Display
             console.log('-------------------------------')
             console.log('')
@@ -94,7 +94,7 @@ function songInfo(song, err) {
         } else {
             return console.log('Error occurred: ' + err);
         }
-        
+ 
     });
 }
 
