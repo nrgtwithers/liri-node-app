@@ -37,11 +37,7 @@ switch (commands) {
         }
         break;
     case 'movie-this':
-        if (j) {
             movieInfo(j);
-        } else {
-            movieInfo("Mr. Nobody");
-        }
         break;
     case 'do-what-it-says': doIt();
         break;
@@ -100,10 +96,20 @@ function songInfo(song) {
 
 // Function to pull the specific information below from OMBD API 
 function movieInfo(movie, err) {
-    var movie = nodeinput
+    var movie;
     var omdbURL = 'http://www.omdbapi.com/?t=' + movie + '&plot=short&tomatoes=true&apikey=' + keys.ombd.key;
     axios.get(omdbURL)
         .then(function (response) {
+            if (!nodeinput){
+               movie='Mr. Nobody';
+               console.log('-------------------------------')
+               console.log('')
+               console.log(`If you haven't watched "Mr. Nobody," then you should: http://www.imbd.com/title/tt0485947/`)
+               console.log(`It's on Netflix`)
+               console.log('')
+               console.log('-------------------------------')
+            }else{
+               movie= nodeinput;
             var data = response.data
             // Displays in terminal
             console.log('-------------------------------')
@@ -116,17 +122,9 @@ function movieInfo(movie, err) {
             console.log(`Plot: ${data.Plot}`)
             console.log(`Actors/Actresses: ${data.Actors}`)
             console.log('-------------------------------')
+            }
         })
         .catch(function (error) {
-            //This is to pull information when no content is entered after movie-this command
-            if (nodeinput === "Mr. Nobody") {
-                console.log('-------------------------------')
-                console.log('')
-                console.log(`If you haven't watched "Mr. Nobody," then you should: http://www.imbd.com/title/tt0485947/`)
-                console.log(`It's on Netflix`)
-                console.log('')
-                console.log('-------------------------------')
-            }
         });
 }
 // Function to pull information from random.txt to seach for song information thru Spotify.
